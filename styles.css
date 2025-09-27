@@ -193,7 +193,7 @@ body {
 .site-container {
     max-width: 100%;
     margin: 0 auto;
-    padding: 0 6%;
+    padding: 0 3%;
     position: relative;
     width: 100%;
 }
@@ -205,16 +205,18 @@ body {
 /* Project Covers */
 .project-covers {
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: column;
     padding-bottom: 0px;
     padding-top: 0px;
+    gap: 0;
 }
 
 a.project-cover {
     display: block;
     position: relative;
-    margin-right: 6px;
-    width: calc(50% - 3px);
+    margin-right: 0;
+    margin-left: 0;
+    width: 100%;
     cursor: pointer;
     text-decoration: none !important;
     color: inherit !important;
@@ -239,15 +241,6 @@ a.project-cover:link {
 a.project-cover:active {
     color: inherit !important;
     text-decoration: none !important;
-}
-
-.project-cover:nth-child(2n) {
-    margin-right: 0;
-}
-
-.project-cover:nth-child(2n + 1) {
-    clear: left;
-    margin-left: 0;
 }
 
 .cover-image-wrap {
@@ -509,7 +502,7 @@ a.project-cover:active {
     padding-bottom: 100px;
     max-width: 100%;
     margin: 0;
-    padding: 0 6%;
+    padding: 0;
 }
 
 .gallery-item {
@@ -558,7 +551,7 @@ a.project-cover:active {
 
 /* Other Projects Section */
 .other-projects {
-    padding: 100px 6% 100px 6%;
+    padding: 100px 3% 100px 3%;
     max-width: 100%;
     margin: 0;
 }
@@ -755,6 +748,7 @@ a.project-cover:active {
     
     .project-cover {
         margin-right: 0 !important;
+        margin-left: 0 !important;
         width: 100%;
     }
     
@@ -826,7 +820,7 @@ a.project-cover:active {
         padding-bottom: 50px;
         max-width: 100%;
         margin: 0;
-        padding: 0 6%;
+        padding: 0;
     }
     
     .gallery-item {
@@ -839,7 +833,7 @@ a.project-cover:active {
 .bottom-info-section {
     background-color: #191919;
     color: #ffffff;
-    padding: 60px 5% 40px 5%;
+    padding: 60px 3% 40px 3%;
     margin-top: 80px;
     position: relative;
 }
@@ -848,8 +842,8 @@ a.project-cover:active {
     content: '';
     position: absolute;
     top: 20px;
-    left: 5%;
-    right: 5%;
+    left: 3%;
+    right: 3%;
     height: 1px;
     background-color: #333;
     opacity: 0.6;
@@ -874,11 +868,11 @@ a.project-cover:active {
 }
 
 .links-column {
-    padding-left: 120px;
+    padding-left: 0;
 }
 
 .contact-column {
-    padding-left: 100px;
+    padding-left: 0;
 }
 
 .info-column {
@@ -1008,7 +1002,7 @@ a.project-cover:active {
     }
     
     .bottom-info-section {
-        padding: 40px 5% 30px 5%;
+        padding: 40px 3% 30px 3%;
     }
     
     .copyright-section {
