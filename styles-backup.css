@@ -624,7 +624,9 @@ a.project-cover:active {
     color: #666;
 }
 
+/* Mobile Styles - Consolidated */
 @media (max-width: 768px) {
+    /* Other Projects Mobile Styles */
     .other-projects .project-covers {
         flex-wrap: wrap;
     }
@@ -636,6 +638,54 @@ a.project-cover:active {
     
     .other-projects .cover-image {
         height: 80px;
+    }
+    
+    /* Mobile Navigation Styles */
+    .site-header .nav-left {
+        display: none !important;
+    }
+    
+    .site-header .mobile-menu-toggle {
+        display: flex !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        flex-shrink: 0;
+    }
+    
+    .site-header .site-brand {
+        position: static !important;
+        transform: none !important;
+        flex: 1;
+        text-align: center;
+    }
+    
+    .site-header .nav-spacer {
+        display: none !important;
+    }
+    
+    .site-header {
+        justify-content: space-between !important;
+        align-items: center !important;
+    }
+    
+    /* Bottom Info Mobile Styles */
+    .bottom-info-content {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+    
+    .bottom-info-section {
+        padding: 40px 5% 30px 5%;
+    }
+    
+    .copyright-section {
+        margin-top: 30px;
+        padding-top: 15px;
+    }
+    
+    .copyright-section p {
+        font-size: 11px;
+        line-height: 1.6;
     }
 }
 
@@ -783,6 +833,24 @@ a.project-cover:active {
     
     .site-header nav {
         gap: 1rem;
+    }
+    
+    /* Ensure mobile navigation overrides */
+    .site-header .nav-left {
+        display: none !important;
+    }
+    
+    .site-header .mobile-menu-toggle {
+        display: flex !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+    }
+    
+    .site-header .site-brand {
+        position: static !important;
+        transform: none !important;
+        flex: 1;
+        text-align: center;
     }
     
     .about-text h1 {
@@ -1000,30 +1068,8 @@ a.project-cover:active {
     text-align: justify;
 }
 
-/* Responsive Bottom Info */
-@media (max-width: 768px) {
-    .bottom-info-content {
-        grid-template-columns: 1fr;
-        gap: 40px;
-    }
-    
-    .bottom-info-section {
-        padding: 40px 5% 30px 5%;
-    }
-    
-    .copyright-section {
-        margin-top: 30px;
-        padding-top: 15px;
-    }
-    
-    .copyright-section p {
-        font-size: 11px;
-        line-height: 1.6;
-    }
-}
-
-/* Hamburger Menu Styles */
-.hamburger-menu {
+/* Mobile Navigation Styles */
+.mobile-menu-toggle {
     display: none;
     flex-direction: column;
     justify-content: space-around;
@@ -1034,74 +1080,116 @@ a.project-cover:active {
     cursor: pointer;
     padding: 0;
     z-index: 1001;
+    position: relative;
 }
+
+/* Debug: Make hamburger more visible on mobile */
+@media screen and (max-width: 768px) {
+    .mobile-menu-toggle {
+        background: rgba(255, 255, 255, 0.1) !important;
+        border: 1px solid rgba(255, 255, 255, 0.3) !important;
+        border-radius: 4px !important;
+    }
+}
+
 
 .hamburger-line {
     width: 25px;
     height: 3px;
     background-color: #ffffff;
     transition: all 0.3s ease;
-    transform-origin: center;
+    transform-origin: 1px;
 }
 
-.hamburger-menu.active .hamburger-line:nth-child(1) {
-    transform: rotate(45deg) translate(6px, 6px);
+.mobile-menu-toggle.active .hamburger-line:nth-child(1) {
+    transform: rotate(45deg);
 }
 
-.hamburger-menu.active .hamburger-line:nth-child(2) {
+.mobile-menu-toggle.active .hamburger-line:nth-child(2) {
     opacity: 0;
+    transform: translateX(20px);
 }
 
-.hamburger-menu.active .hamburger-line:nth-child(3) {
-    transform: rotate(-45deg) translate(6px, -6px);
+.mobile-menu-toggle.active .hamburger-line:nth-child(3) {
+    transform: rotate(-45deg);
 }
 
-/* Mobile Navigation Styles */
-.nav-left.mobile-active {
-    display: flex !important;
-    flex-direction: column;
+.mobile-nav {
     position: fixed;
     top: 70px;
     left: 0;
-    right: 0;
+    width: 100%;
     background-color: #191919;
-    padding: 20px 5%;
+    transform: translateY(-100%);
+    transition: transform 0.3s ease;
     z-index: 1000;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-    gap: 0;
 }
 
-.nav-left.mobile-active .page-title {
-    display: block;
-    padding: 15px 0;
-    border-bottom: 1px solid #333;
+.mobile-nav.active {
+    transform: translateY(0);
+}
+
+.mobile-nav-content {
+    padding: 20px 5%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.mobile-nav-link {
+    font-family: 'Inter', sans-serif;
     font-size: 18px;
+    font-weight: 400;
+    color: #a9a9a9;
+    text-decoration: none;
+    padding: 10px 0;
+    transition: color 0.3s ease;
+    border-bottom: 1px solid #333333;
 }
 
-.nav-left.mobile-active .page-title:last-child {
-    border-bottom: none;
+.mobile-nav-link:hover {
+    color: #ffffff;
 }
 
-/* Mobile Responsive Styles */
-@media (max-width: 768px) {
-    .hamburger-menu {
-        display: flex;
+/* Additional Mobile Override - Force Mobile Navigation */
+@media screen and (max-width: 768px) {
+    /* Force mobile menu visibility */
+    .mobile-menu-toggle {
+        display: flex !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        position: relative !important;
+        z-index: 9999 !important;
     }
     
+    /* Force hide desktop nav */
     .nav-left {
         display: none !important;
+        visibility: hidden !important;
     }
     
-    .nav-spacer {
-        display: none;
-    }
-    
-    .site-header {
-        justify-content: space-between;
-    }
-    
+    /* Force logo to be visible and centered */
     .site-brand {
-        position: static;
-        transform: none;
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        position: static !important;
+        transform: none !important;
+        flex: 1 !important;
+        text-align: center !important;
+    }
+    
+    /* Force header layout */
+    .site-header {
+        display: flex !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        flex-direction: row !important;
+    }
+    
+    /* Hide nav spacer */
+    .nav-spacer {
+        display: none !important;
     }
 }

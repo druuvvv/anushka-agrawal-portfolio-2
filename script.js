@@ -12,31 +12,33 @@ document.addEventListener('DOMContentLoaded', function() {
         const scrollY = window.pageYOffset;
         
         // Update scroll to top button
-        if (scrollY > 300) {
+        if (scrollToTopBtn && scrollY > 300) {
             scrollToTopBtn.classList.add('show');
-        } else {
+        } else if (scrollToTopBtn) {
             scrollToTopBtn.classList.remove('show');
         }
         
         // Update navbar background
-        if (scrollY > 50) {
+        if (navbar && scrollY > 50) {
             navbar.classList.add('on-scroll');
-        } else {
+        } else if (navbar) {
             navbar.classList.remove('on-scroll');
         }
 
-        // Adobe Portfolio style masthead fade out (stays in place)
-        const fadeStart = 0;
-        const fadeEnd = window.innerHeight * 0.6; // Fade out over 60% of viewport height
-        
-        // Calculate opacity based on scroll position
-        let opacity = 1;
-        if (scrollY > fadeStart) {
-            opacity = Math.max(0, 1 - (scrollY - fadeStart) / (fadeEnd - fadeStart));
+        // Adobe Portfolio style masthead fade out (stays in place) - only if masthead exists
+        if (masthead) {
+            const fadeStart = 0;
+            const fadeEnd = window.innerHeight * 0.6; // Fade out over 60% of viewport height
+            
+            // Calculate opacity based on scroll position
+            let opacity = 1;
+            if (scrollY > fadeStart) {
+                opacity = Math.max(0, 1 - (scrollY - fadeStart) / (fadeEnd - fadeStart));
+            }
+            
+            // Apply only opacity (no movement)
+            masthead.style.opacity = opacity;
         }
-        
-        // Apply only opacity (no movement)
-        masthead.style.opacity = opacity;
         
         ticking = false;
     }
@@ -50,8 +52,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     window.addEventListener('scroll', requestTick);
 
-// Force footer links to work
-document.addEventListener('DOMContentLoaded', function() {
+    // Force footer links to work
     // Add click handlers to all footer links
     const footerLinks = document.querySelectorAll('.links-list a');
     footerLinks.forEach(link => {
@@ -80,25 +81,22 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     });
-});
     
     // Scroll to top when button is clicked
-    scrollToTopBtn.addEventListener('click', function() {
-        window.scrollTo({
-            top: 0,
-            behavior: 'smooth'
+    if (scrollToTopBtn) {
+        scrollToTopBtn.addEventListener('click', function() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
         });
-    });
+    }
 
-    // Debug: Check if project cover links are working
+    // Project cover links
     const projectLinks = document.querySelectorAll('a.project-cover');
-    console.log('Found project links:', projectLinks.length);
     
     projectLinks.forEach(function(link, index) {
-        console.log('Project link', index, 'href:', link.href);
-        
         link.addEventListener('click', function(e) {
-            console.log('Clicked project link:', link.href);
             // Don't prevent default - let the link work naturally
         });
     });
@@ -132,31 +130,33 @@ document.addEventListener('DOMContentLoaded', function() {
         const masthead = document.querySelector('.masthead');
         const mastheadPlaceholder = document.querySelector('.masthead-placeholder');
         
-        if (window.innerWidth <= 540) {
-            // Mobile adjustments
-            masthead.style.height = '80vh';
-            mastheadPlaceholder.style.height = '80vh';
-        } else if (window.innerWidth <= 932) {
-            // Tablet adjustments
-            masthead.style.height = '80vh';
-            mastheadPlaceholder.style.height = '80vh';
-        } else {
-            // Desktop
-            masthead.style.height = '85vh';
-            mastheadPlaceholder.style.height = '85vh';
+        if (masthead && mastheadPlaceholder) {
+            if (window.innerWidth <= 540) {
+                // Mobile adjustments
+                masthead.style.height = '80vh';
+                mastheadPlaceholder.style.height = '80vh';
+            } else if (window.innerWidth <= 932) {
+                // Tablet adjustments
+                masthead.style.height = '80vh';
+                mastheadPlaceholder.style.height = '80vh';
+            } else {
+                // Desktop
+                masthead.style.height = '85vh';
+                mastheadPlaceholder.style.height = '85vh';
+            }
+            
+            // Reset opacity on resize to prevent issues
+            const currentScrollY = window.pageYOffset;
+            const fadeStart = 0;
+            const fadeEnd = window.innerHeight * 0.6;
+            
+            let opacity = 1;
+            if (currentScrollY > fadeStart) {
+                opacity = Math.max(0, 1 - (currentScrollY - fadeStart) / (fadeEnd - fadeStart));
+            }
+            
+            masthead.style.opacity = opacity;
         }
-        
-        // Reset opacity on resize to prevent issues
-        const currentScrollY = window.pageYOffset;
-        const fadeStart = 0;
-        const fadeEnd = window.innerHeight * 0.6;
-        
-        let opacity = 1;
-        if (currentScrollY > fadeStart) {
-            opacity = Math.max(0, 1 - (currentScrollY - fadeStart) / (fadeEnd - fadeStart));
-        }
-        
-        masthead.style.opacity = opacity;
     }
 
     // Handle resize events
@@ -164,6 +164,7 @@ document.addEventListener('DOMContentLoaded', function() {
     handleResize(); // Initial call
 
     // Intersection Observer for project covers animation
+    const projectCovers = document.querySelectorAll('.project-cover');
     const observerOptions = {
         threshold: 0.1,
         rootMargin: '0px 0px -50px 0px'
@@ -185,4 +186,40 @@ document.addEventListener('DOMContentLoaded', function() {
         cover.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
         observer.observe(cover);
     });
+
+    // Hamburger Menu Functionality
+    const hamburgerMenu = document.getElementById('hamburgerMenu');
+    const desktopNav = document.getElementById('desktopNav');
+    
+    if (hamburgerMenu && desktopNav) {
+        hamburgerMenu.addEventListener('click', function() {
+            hamburgerMenu.classList.toggle('active');
+            desktopNav.classList.toggle('mobile-active');
+        });
+        
+        // Close menu when clicking on nav links
+        const navLinks = document.querySelectorAll('.page-title');
+        navLinks.forEach(function(link) {
+            link.addEventListener('click', function() {
+                hamburgerMenu.classList.remove('active');
+                desktopNav.classList.remove('mobile-active');
+            });
+        });
+        
+        // Close menu when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!hamburgerMenu.contains(e.target) && !desktopNav.contains(e.target)) {
+                hamburgerMenu.classList.remove('active');
+                desktopNav.classList.remove('mobile-active');
+            }
+        });
+        
+        // Close menu on window resize to desktop
+        window.addEventListener('resize', function() {
+            if (window.innerWidth > 768) {
+                hamburgerMenu.classList.remove('active');
+                desktopNav.classList.remove('mobile-active');
+            }
+        });
+    }
 });
